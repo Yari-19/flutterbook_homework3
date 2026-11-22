@@ -12,6 +12,7 @@ import 'notes/notes.dart';
 import 'notes/notes_model.dart';
 import 'tasks/tasks.dart';
 import 'tasks/tasks_model.dart';
+import 'expenses/expenses.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -89,4 +90,5 @@ final _tabs = <_TabInfo>[
       child: const Tasks(),
     ),
   ),
+  (title: 'Expenses', icon: Icons.attach_money, view: const Expenses()),
 ];
