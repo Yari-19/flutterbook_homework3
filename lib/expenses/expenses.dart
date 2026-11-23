@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'expenses_model.dart';
 import 'expenses_list.dart';
+import 'expenses_entry.dart';
 
-/// Displays the main interface for managing expenses.
+/// Main interface for managing expenses.
 class Expenses extends StatelessWidget {
   const Expenses({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const ExpensesList();
+    final model = context.watch<ExpensesModel>();
+
+    return IndexedStack(
+      index: model.screen.index,
+      children: const <Widget>[ExpensesList(), ExpensesEntry()],
+    );
   }
 }
