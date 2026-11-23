@@ -13,6 +13,7 @@ import 'notes/notes_model.dart';
 import 'tasks/tasks.dart';
 import 'tasks/tasks_model.dart';
 import 'expenses/expenses.dart';
+import 'expenses/expenses_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -90,5 +91,13 @@ final _tabs = <_TabInfo>[
       child: const Tasks(),
     ),
   ),
-  (title: 'Expenses', icon: Icons.attach_money, view: const Expenses()),
+
+  (
+    title: 'Expenses',
+    icon: Icons.attach_money,
+    view: ChangeNotifierProvider(
+      create: (_) => ExpensesModel()..loadData(notify: true),
+      child: const Expenses(),
+    ),
+  ),
 ];
