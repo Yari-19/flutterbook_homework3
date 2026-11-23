@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 
 import 'expenses_model.dart';
 
 /// Displays the expenses stored in the database.
+///
+/// Watches [ExpensesModel] for updates. Tap an expense to edit it, use Add
+/// to create one, or slide a row to reveal the confirmed delete action.
 class ExpensesList extends StatelessWidget {
+  /// Creates the list; requires an ancestor provider of [ExpensesModel].
   const ExpensesList({super.key});
 
   @override
@@ -67,38 +71,12 @@ class ExpensesList extends StatelessWidget {
                     ),
                   ),
                 );
-
-                return Card(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  child: ListTile(
-                    onTap: () => model.startEditingEntry(expense),
-                    leading: CircleAvatar(
-                      child: Icon(_categoryIcon(expense.category)),
-                    ),
-                    title: Text(expense.title),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(expense.category),
-                        Text(expense.formattedExpenseDate ?? 'No date'),
-                        Text(expense.paymentMethod),
-                      ],
-                    ),
-                    trailing: Text(
-                      '\$${expense.amount.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                );
               },
             ),
     );
   }
 
-  /// Returns an icon based on the expense category.
+  /// Returns the category icon, defaulting to a money icon for other categories.
   IconData _categoryIcon(String category) {
     switch (category) {
       case 'Food':
@@ -116,7 +94,7 @@ class ExpensesList extends StatelessWidget {
     }
   }
 
-  /// Displays a confirmation dialog before deleting an expense.
+  /// Deletes [expense] through the model only after the user confirms.
   Future<void> _deleteExpense(BuildContext context, Expense expense) async {
     final model = context.read<ExpensesModel>();
     final messenger = ScaffoldMessenger.of(context);

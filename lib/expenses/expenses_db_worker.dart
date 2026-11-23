@@ -1,11 +1,12 @@
 import '../base_model.dart';
 import 'expenses_model.dart';
 
-/// SQLite-backed persistence for Expense entries.
+/// SQLite-backed persistence for [Expense] entries.
 ///
 /// Provides the table schema and conversion methods.
-/// CRUD operations are inherited from SqliteDBWorker.
+/// CRUD operations are inherited from [SqliteDBWorker].
 class ExpensesDBWorker extends SqliteDBWorker<Expense> {
+  /// Shared worker for the expenses database.
   static final ExpensesDBWorker db = ExpensesDBWorker._();
 
   ExpensesDBWorker._();

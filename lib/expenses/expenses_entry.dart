@@ -4,7 +4,11 @@ import 'package:provider/provider.dart';
 import 'expenses_model.dart';
 
 /// Form used to create or edit an expense.
+///
+/// Validates the title and amount before saving through [ExpensesModel].
+/// Cancel returns to the list without persisting the form values.
 class ExpensesEntry extends StatefulWidget {
+  /// Creates the form; requires an ancestor provider of [ExpensesModel].
   const ExpensesEntry({super.key});
 
   @override
@@ -48,7 +52,7 @@ class _ExpensesEntryState extends State<ExpensesEntry> {
     super.dispose();
   }
 
-  /// Loads the selected expense into the form.
+  /// Loads [expense] into the controllers when a different entry is selected.
   void _loadExpense(Expense expense) {
     _currentExpense = expense;
 
@@ -81,7 +85,7 @@ class _ExpensesEntryState extends State<ExpensesEntry> {
     }
   }
 
-  /// Validates the form and saves the expense.
+  /// Validates the title and positive finite amount, then persists the expense.
   Future<void> _saveExpense() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -111,7 +115,7 @@ class _ExpensesEntryState extends State<ExpensesEntry> {
     );
   }
 
-  /// Cancels editing without saving changes.
+  /// Discards unsaved form values and reloads persisted entries.
   Future<void> _cancelEditing() async {
     final model = context.read<ExpensesModel>();
     await model.stopEditingEntry();
