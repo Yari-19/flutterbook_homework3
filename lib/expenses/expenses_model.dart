@@ -1,5 +1,13 @@
-
 import '../base_model.dart';
+import 'expenses_db_worker.dart';
+
+/// Manages the list of expenses and the currently edited expense.
+///
+/// Inherits loading, saving, deleting, and screen management
+/// functionality from BaseModel.
+class ExpensesModel extends BaseModel<Expense> {
+  ExpensesModel() : super(ExpensesDBWorker.db);
+}
 
 /// Represents a single expense recorded by the user.
 class Expense extends Entry with DateMixin {
@@ -39,14 +47,14 @@ class Expense extends Entry with DateMixin {
 
   /// Creates a separate copy of the expense.
   Expense clone() => Expense(
-        id: id,
-        title: title,
-        amount: amount,
-        category: category,
-        paymentMethod: paymentMethod,
-        description: description,
-        expenseDate: expenseDate,
-      );
+    id: id,
+    title: title,
+    amount: amount,
+    category: category,
+    paymentMethod: paymentMethod,
+    description: description,
+    expenseDate: expenseDate,
+  );
 
   /// Returns a readable representation of the expense.
   @override
